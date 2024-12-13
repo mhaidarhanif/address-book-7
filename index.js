@@ -44,6 +44,11 @@ function searchFruits(fruits, searchTerm) {
     return fruit.name.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
+  if (searchedFruits.length <= 0) {
+    console.log("No fruits found");
+    return;
+  }
+
   renderFruits(searchedFruits);
 }
 
@@ -102,8 +107,10 @@ function updateFruit(fruits, fruitId, updatedFruitInput) {
   renderFruits(dataFruits);
 }
 
+// READ / SHOW / RENDER / DISPLAY
 // renderFruits(dataFruits);
-// searchFruits(dataFruits, "le");
+
+// ADD / CREATE
 // addFruit(dataFruits, {
 //   name: "Strawberry",
 //   tags: ["red", "sweet"],
@@ -111,7 +118,14 @@ function updateFruit(fruits, fruitId, updatedFruitInput) {
 //   expiredAt: "2026-01-01",
 // });
 
-updateFruit(dataFruits, 1, {
-  name: "Strawberry",
-  isFavorited: false,
-});
+// DELETE / REMOVE
+// deleteFruit(dataFruits, 1);
+
+// UPDATE / EDIT
+// updateFruit(dataFruits, 1, {
+//   name: "Strawberry",
+//   isFavorited: false,
+// });
+
+// SEARCH / FILTER
+// searchFruits(dataFruits, "berry");
