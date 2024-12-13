@@ -39,6 +39,19 @@ function renderFruits(fruits) {
   });
 }
 
+function renderOneFruit(fruits, fruitId) {
+  const fruit = fruits.find((fruit) => {
+    return fruit.id === fruitId;
+  });
+
+  if (!fruit) {
+    console.log("No fruit found");
+    return;
+  }
+
+  renderFruits([fruit]);
+}
+
 function searchFruits(fruits, searchTerm) {
   const searchedFruits = fruits.filter((fruit) => {
     return fruit.name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -109,6 +122,9 @@ function updateFruit(fruits, fruitId, updatedFruitInput) {
 
 // READ / SHOW / RENDER / DISPLAY
 // renderFruits(dataFruits);
+
+// READ ONE
+// renderOneFruit(dataFruits, 2);
 
 // ADD / CREATE
 // addFruit(dataFruits, {
