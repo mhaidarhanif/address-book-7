@@ -1,21 +1,117 @@
-const fruits = [
+let dataFruits = [
   {
     id: 1,
     name: "Apple",
     tags: ["red", "delicious"],
     isFavorited: true,
+    expiredAt: new Date("2025-01-01"),
   },
   {
     id: 2,
     name: "Orange",
     tags: ["orange", "sour"],
     isFavorited: false,
+    expiredAt: new Date("2025-01-01"),
   },
   {
     id: 3,
     name: "Grape",
     tags: ["purple", "green", "white"],
+    isFavorited: false,
+    expiredAt: new Date("2025-01-01"),
   },
 ];
 
-console.log(fruits);
+function renderFruits(fruits) {
+  fruits.forEach((fruit) => {
+    const formattedDate = new Intl.DateTimeFormat("en-UK", {
+      dateStyle: "long",
+      timeStyle: "short",
+      timeZone: "Asia/Jakarta",
+    }).format(fruit.expiredAt);
+
+    console.log(`
+      Name: ${fruit.name}
+      Tags: ${fruit.tags.join(", ")}
+      Is Favorited: ${fruit.isFavorited ? "✅" : "❌"}
+      Expired At: ${formattedDate}
+      `);
+  });
+}
+
+function searchFruits(fruits, searchTerm) {
+  const searchedFruits = fruits.filter((fruit) => {
+    return fruit.name.toLowerCase().includes(searchTerm.toLowerCase());
+  });
+
+  renderFruits(searchedFruits);
+}
+
+function generateId(fruits) {
+  return fruits[fruits.length - 1].id + 1;
+}
+
+function addFruit(fruits, newFruitInput) {
+  const newFruit = {
+    id: generateId(fruits),
+    name: newFruitInput.name,
+    tags: newFruitInput.tags,
+    isFavorited: newFruitInput.isFavorited,
+    expiredAt: new Date(newFruitInput.expiredAt),
+  };
+
+  const newFruits = [...fruits, newFruit];
+
+  dataFruits = newFruits;
+
+  renderFruits(dataFruits);
+}
+
+function deleteFruit(fruits, fruitId) {
+  const filteredFruits = fruits.filter((fruit) => {
+    return fruit.id !== fruitId;
+  });
+
+  dataFruits = filteredFruits;
+
+  renderFruits(dataFruits);
+}
+
+function updateFruit(fruits, fruitId, updatedFruitInput) {
+  const originalFruit = fruits.find((fruit) => {
+    return fruit.id === fruitId;
+  });
+
+  const updatedFruit = {
+    id: fruitId,
+    name: updatedFruitInput.name || originalFruit.name,
+    tags: updatedFruitInput.tags || originalFruit.tags,
+    isFavorited: updatedFruitInput.isFavorited || originalFruit.isFavorited,
+    expiredAt: new Date(updatedFruitInput.expiredAt || originalFruit.expiredAt),
+  };
+
+  const updatedFruits = fruits.map((fruit) => {
+    if (fruit.id === fruitId) {
+      return updatedFruit;
+    }
+    return fruit;
+  });
+
+  dataFruits = updatedFruits;
+
+  renderFruits(dataFruits);
+}
+
+// renderFruits(dataFruits);
+// searchFruits(dataFruits, "le");
+// addFruit(dataFruits, {
+//   name: "Strawberry",
+//   tags: ["red", "sweet"],
+//   isFavorited: true,
+//   expiredAt: "2026-01-01",
+// });
+
+updateFruit(dataFruits, 1, {
+  name: "Strawberry",
+  isFavorited: false,
+});
