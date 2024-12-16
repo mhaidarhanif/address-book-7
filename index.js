@@ -25,26 +25,27 @@ let dataFruits = [
 const fruitsListElement = document.getElementById("fruits-list");
 
 function renderFruits(fruits) {
-  fruits.forEach((fruit) => {
+  const fruitsLiElements = fruits.map((fruit) => {
     const formattedDate = new Intl.DateTimeFormat("en-UK", {
       dateStyle: "long",
       timeStyle: "short",
       timeZone: "Asia/Jakarta",
     }).format(fruit.expiredAt);
 
-    const fruitLiElement = document.createElement("li");
-
-    fruitLiElement.innerHTML = `
-    <div class="border border-2 p-4 rounded-md">
-    <h1>${fruit.name}</h1>
-    <p>Tags: ${fruit.tags.join(", ")}</p>
-    <p>Is Favorited: ${fruit.isFavorited ? "✅" : "❌"}</p>
-    <p>Expired At: ${formattedDate}</p>
-    </div>
+    return `
+    <li>
+      <div class="border border-2 p-4 rounded-md">
+        <h1>${fruit.name}</h1>
+        <p>Tags: ${fruit.tags.join(", ")}</p>
+        <p>Is Favorited: ${fruit.isFavorited ? "✅" : "❌"}</p>
+        <p>Expired At: ${formattedDate}</p>
+        <button class="bg-red-500 py-0.5 px-1 text-xs rounded-md text-white">Delete</button>
+      </div>
+    </li>
     `;
-
-    fruitsListElement.appendChild(fruitLiElement);
   });
+
+  fruitsListElement.innerHTML = fruitsLiElements.join("");
 }
 
 function renderOneFruit(fruits, fruitId) {
