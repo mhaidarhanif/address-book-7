@@ -22,6 +22,8 @@ let dataFruits = [
   },
 ];
 
+const fruitsListElement = document.getElementById("fruits-list");
+
 function renderFruits(fruits) {
   fruits.forEach((fruit) => {
     const formattedDate = new Intl.DateTimeFormat("en-UK", {
@@ -30,12 +32,18 @@ function renderFruits(fruits) {
       timeZone: "Asia/Jakarta",
     }).format(fruit.expiredAt);
 
-    console.log(`
-      Name: ${fruit.name}
-      Tags: ${fruit.tags.join(", ")}
-      Is Favorited: ${fruit.isFavorited ? "✅" : "❌"}
-      Expired At: ${formattedDate}
-      `);
+    const fruitLiElement = document.createElement("li");
+
+    fruitLiElement.innerHTML = `
+    <div class="border border-2 p-4 rounded-md">
+    <h1>${fruit.name}</h1>
+    <p>Tags: ${fruit.tags.join(", ")}</p>
+    <p>Is Favorited: ${fruit.isFavorited ? "✅" : "❌"}</p>
+    <p>Expired At: ${formattedDate}</p>
+    </div>
+    `;
+
+    fruitsListElement.appendChild(fruitLiElement);
   });
 }
 
@@ -121,7 +129,7 @@ function updateFruit(fruits, fruitId, updatedFruitInput) {
 }
 
 // READ / SHOW / RENDER / DISPLAY
-// renderFruits(dataFruits);
+renderFruits(dataFruits);
 
 // READ ONE
 // renderOneFruit(dataFruits, 2);
