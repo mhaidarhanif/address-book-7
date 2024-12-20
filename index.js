@@ -24,8 +24,17 @@ let dataFruits = [
 
 const fruitsListElement = document.getElementById("fruits-list");
 
+const addFormElement = document.getElementById("add-form");
+
 function renderFruits(fruits) {
-  const fruitsLiElements = fruits.map((fruit) => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const searchQuery = urlParams.get("q");
+
+  const fruitsToDisplay = searchQuery
+    ? searchFruits(fruits, searchQuery)
+    : fruits;
+
+  const fruitsLiElements = fruitsToDisplay.map((fruit) => {
     const formattedDate = new Intl.DateTimeFormat("en-UK", {
       dateStyle: "long",
       timeStyle: "short",
@@ -39,7 +48,16 @@ function renderFruits(fruits) {
         <p>Tags: ${fruit.tags.join(", ")}</p>
         <p>Is Favorited: ${fruit.isFavorited ? "✅" : "❌"}</p>
         <p>Expired At: ${formattedDate}</p>
-        <button class="bg-red-500 py-0.5 px-1 text-xs rounded-md text-white">Delete</button>
+
+        <div>
+         <a href="/fruits/?id=${fruit.id}"
+         class="bg-yellow-700 py-0.5 px-1 text-xs rounded-md text-white"
+         >View</a>
+        
+        <button onclick="deleteFruit(${
+          fruit.id
+        })" class="bg-red-500 py-0.5 px-1 text-xs rounded-md text-white">Delete</button>
+        </div>
       </div>
     </li>
     `;
@@ -61,17 +79,17 @@ function renderOneFruit(fruits, fruitId) {
   renderFruits([fruit]);
 }
 
-function searchFruits(fruits, searchTerm) {
+function searchFruits(fruits, searchQuery) {
   const searchedFruits = fruits.filter((fruit) => {
-    return fruit.name.toLowerCase().includes(searchTerm.toLowerCase());
+    return fruit.name.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
   if (searchedFruits.length <= 0) {
     console.log("No fruits found");
-    return;
+    return [];
   }
 
-  renderFruits(searchedFruits);
+  return searchedFruits;
 }
 
 function generateId(fruits) {
@@ -82,9 +100,11 @@ function addFruit(fruits, newFruitInput) {
   const newFruit = {
     id: generateId(fruits),
     name: newFruitInput.name,
-    tags: newFruitInput.tags,
-    isFavorited: newFruitInput.isFavorited,
-    expiredAt: new Date(newFruitInput.expiredAt),
+    tags: newFruitInput.tags || [],
+    isFavorited: newFruitInput.isFavorited || false,
+    expiredAt: newFruitInput.expiredAt
+      ? new Date(newFruitInput.expiredAt)
+      : new Date(),
   };
 
   const newFruits = [...fruits, newFruit];
@@ -94,8 +114,8 @@ function addFruit(fruits, newFruitInput) {
   renderFruits(dataFruits);
 }
 
-function deleteFruit(fruits, fruitId) {
-  const filteredFruits = fruits.filter((fruit) => {
+function deleteFruit(fruitId) {
+  const filteredFruits = dataFruits.filter((fruit) => {
     return fruit.id !== fruitId;
   });
 
@@ -128,6 +148,20 @@ function updateFruit(fruits, fruitId, updatedFruitInput) {
 
   renderFruits(dataFruits);
 }
+
+addFormElement.addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  const addFormData = new FormData(addFormElement);
+
+  const fruitData = {
+    name: addFormData.get("name"),
+  };
+
+  console.log({ fruitData });
+
+  addFruit(dataFruits, fruitData);
+});
 
 // READ / SHOW / RENDER / DISPLAY
 renderFruits(dataFruits);

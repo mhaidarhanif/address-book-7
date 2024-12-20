@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Data</title>
+  </head>
+  <body>
+    <h1>Form Data</h1>
+
+    <form method="post" id="message-form">
+      <div>
+        <label for="full-name">Full name:</label>
+        <input
+          type="text"
+          name="full-name"
+          id="full-name"
+          placeholder="Elon Musk"
+        />
+      </div>
+
+      <div>
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="elon@tesla.com"
+        />
+      </div>
+
+      <div>
+        <label for="phone">Phone:</label>
+        <input type="tel" name="phone" id="phone" placeholder="+123-456-7890" />
+      </div>
+
+      <div>
+        <label for="message">Message:</label>
+        <textarea
+          name="message"
+          id="message"
+          placeholder="Type your message..."
+        ></textarea>
+      </div>
+
+      <button type="submit">Send Message</button>
+    </form>
+
+    <script src="form.js"></script>
+  </body>
+</html>

@@ -3,12 +3,47 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Address Book</title>
+    <title>Fruits</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-    <h1 class="text-3xl font-bold underline">Address Book</h1>
+    <h1 class="text-3xl font-bold underline">Fruits</h1>
+
+    <form>
+      <input
+        type="search"
+        name="q"
+        placeholder="Search fruits..."
+        class="border px-1 py-0.5"
+      />
+      <button
+        type="submit"
+        class="bg-blue-100 py-1 px-2 text-sm font-bold rounded-md text-blue-700"
+      >
+        🔎
+      </button>
+    </form>
+
+    <form method="post" id="add-form" class="p-10 border">
+      <div>
+        <label for="name">Name:</label>
+        <input
+          id="name"
+          type="text"
+          name="name"
+          placeholder="Apple"
+          class="border px-1 py-0.5"
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="bg-green-100 py-1 px-2 text-sm font-bold rounded-md text-green-700"
+      >
+        Add New Fruit
+      </button>
+    </form>
 
     <main class="p-4">
       <ul id="fruits-list" class="space-y-4">
